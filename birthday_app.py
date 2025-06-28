@@ -6,16 +6,37 @@ import os
 # Page configuration
 st.set_page_config(page_title="Happy Birthday Barnita 🎂", layout="centered")
 
-# Set a birthday image background
-st.markdown("""
+# Set glittery animated background using the uploaded image
+st.markdown(f"""
 <style>
-.stApp {
-    background-image: url("https://i.ibb.co/7JfqXxB/birthday-bg.jpg");
+.stApp {{
+    background: url("data:image/jpeg;base64,{base64.b64encode(open('istockphoto-1399105128-612x612.jpg', 'rb').read()).decode()}");
     background-size: cover;
-    background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-}
+    position: relative;
+}}
+
+.stApp::before {{
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    animation: shimmer 4s infinite;
+    z-index: 0;
+}}
+
+@keyframes shimmer {{
+    0% {{ background-color: rgba(255, 255, 255, 0.04); }}
+    50% {{ background-color: rgba(255, 255, 255, 0.15); }}
+    100% {{ background-color: rgba(255, 255, 255, 0.04); }}
+}}
+
+h1, h3, p, .stButton > button {{
+    position: relative;
+    z-index: 1;
+}}
 </style>
 """, unsafe_allow_html=True)
 
