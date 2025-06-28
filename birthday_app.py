@@ -13,7 +13,7 @@ st.balloons()
 
 # Show 3 pictures in columns
 cols = st.columns(3)
-images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"]
+images = ["photo1.jpg", "photo3.jpg", "photo2.jpg"]
 for i in range(3):
     with cols[i]:
         st.image(Image.open(images[i]), use_container_width=True)
