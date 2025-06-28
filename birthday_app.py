@@ -106,4 +106,4 @@ for i in range(3):
         st.image(Image.open(images[i]), use_container_width=True)
 
 # Footer
-st.markdown("<p style='text-align: center; font-size: 24px;'>🎂 🎁 🎈 With love and joy 💖</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size: 24px;'>🎂 🎁 🎈 R blush thamena :) 💖</p>", unsafe_allow_html=True)
