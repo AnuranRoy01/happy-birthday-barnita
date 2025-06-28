@@ -6,18 +6,15 @@ import os
 # Page configuration
 st.set_page_config(page_title="Happy Birthday Barnita 🎂", layout="centered")
 
-# Animated birthday background
+# Set a birthday image background
 st.markdown("""
 <style>
-body {
-    background: linear-gradient(-45deg, #ffe0f0, #ffc4e1, #ffd6ec, #ffeaf7);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-}
-@keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+.stApp {
+    background-image: url("https://i.ibb.co/7JfqXxB/birthday-bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 </style>
 """, unsafe_allow_html=True)
