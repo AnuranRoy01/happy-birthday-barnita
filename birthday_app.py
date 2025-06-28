@@ -20,29 +20,24 @@ for i in range(3):
     with cols[i]:
         st.image(Image.open(images[i]), use_container_width=True)
 
-# Background music using autoplay workaround
-def add_bg_music(filepath):
-    if os.path.exists(filepath):
-        with open(filepath, "rb") as f:
-            data = f.read()
-            b64 = base64.b64encode(data).decode()
-            html_code = f"""
-                <audio id="audio" autoplay loop>
-                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-                </audio>
-                <script>
-                var audio = document.getElementById("audio");
-                window.addEventListener('click', function () {{
-                    audio.play();
-                }});
-                </script>
-            """
-            st.markdown(html_code, unsafe_allow_html=True)
-    else:
-        st.warning("Music file not found!")
+# Play Music Button
+if st.button("▶️ Play Birthday Song"):
+    def play_music(filepath):
+        if os.path.exists(filepath):
+            with open(filepath, "rb") as f:
+                data = f.read()
+                b64 = base64.b64encode(data).decode()
+                html_code = f"""
+                    <audio autoplay loop>
+                        <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                    </audio>
+                """
+                st.markdown(html_code, unsafe_allow_html=True)
+        else:
+            st.warning("Music file not found!")
 
-# Add the music (this must match the exact name in your repo)
-add_bg_music("happy-birthday-357371.mp3")
+    # Call the function with the audio file
+    play_music("happy-birthday-357371.mp3")
 
 # Footer
 st.markdown("<p style='text-align: center;'>🎂 🎁 🎈</p>", unsafe_allow_html=True)
