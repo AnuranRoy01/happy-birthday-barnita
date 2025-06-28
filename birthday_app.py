@@ -4,22 +4,21 @@ import base64
 
 st.set_page_config(page_title="Happy Birthday Barnita 🎂", layout="centered")
 
-# Custom Title
-st.markdown("<h1 style='text-align: center; color: #FF69B4;'>🎉 Happy Birthday Ddidivalu! 🎉</h1>", unsafe_allow_html=True)
+# Title
+st.markdown("<h1 style='text-align: center; color: #FF69B4;'>🎉 Happy Birthday Didivalu! 🎉</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>Many Many Happiest Returns of the Day.. 💖</h3>", unsafe_allow_html=True)
 
-# Add confetti
+# Confetti effect
 st.balloons()
 
-# Display images in a row
+# Show 3 pictures in columns
 cols = st.columns(3)
-
 images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"]
 for i in range(3):
     with cols[i]:
-        st.image(Image.open(images[i]), use_column_width=True)
+        st.image(Image.open(images[i]), use_container_width=True)
 
-# Background music
+# Play background music
 def add_bg_music(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -31,7 +30,8 @@ def add_bg_music(file_path):
         """
         st.markdown(md, unsafe_allow_html=True)
 
-add_bg_music("happy_birthday.mp3")
+# This will work only if the file exists!
+add_bg_music("happy-birthday-357371.mp3")
 
-# Optional: subtle footer or emoji
+# Cute footer
 st.markdown("<p style='text-align: center;'>🎂 🎁 🎈</p>", unsafe_allow_html=True)
