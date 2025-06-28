@@ -19,15 +19,26 @@ for i in range(3):
     with cols[i]:
         st.image(Image.open(images[i]), use_container_width=True)
 
-# Background music autoplay and invisible
+# Background music autoplay and invisible (with JS fix)
 def add_bg_music(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
         md = f"""
-        <audio autoplay loop>
+        <audio id="bg-music" autoplay loop style="display:none;">
             <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
         </audio>
+        <script>
+        const audio = document.getElementById("bg-music");
+        window.addEventListener("load", () => {{
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {{
+                playPromise.catch(_ => {{
+                    // Autoplay might be blocked
+                }});
+            }}
+        }});
+        </script>
         """
         st.markdown(md, unsafe_allow_html=True)
 
