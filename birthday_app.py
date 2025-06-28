@@ -10,36 +10,71 @@ st.set_page_config(page_title="Happy Birthday Barnita 🎂", layout="centered")
 st.markdown("<h1 style='text-align: center; color: #FF69B4;'>🎉 Happy Birthday Barnita! 🎉</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>Many Many Happiest Returns of the Day.. 💖</h3>", unsafe_allow_html=True)
 
-# Music controls (styled & interactive)
-col_play, col_stop = st.columns([1, 1])
-with col_play:
-    play = st.button("▶️ Play Birthday Song", use_container_width=True)
-with col_stop:
-    stop = st.button("⏹️ Stop Music", use_container_width=True)
-
-# Background music logic
-def embed_audio(audio_file, play=True):
+# Load and base64 encode the audio file
+def get_audio_base64(audio_file):
     if os.path.exists(audio_file):
         with open(audio_file, "rb") as f:
-            data = f.read()
-            b64 = base64.b64encode(data).decode()
-            html = f"""
-            <audio id="audio" {'autoplay' if play else ''} loop>
-                <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-            </audio>
-            <script>
-                var audio = document.getElementById("audio");
-                {'audio.play();' if play else 'audio.pause(); audio.currentTime = 0;'}
-            </script>
-            """
-            st.markdown(html, unsafe_allow_html=True)
-    else:
-        st.warning("Music file not found!")
+            return base64.b64encode(f.read()).decode()
+    return None
 
-if play:
-    embed_audio("happy-birthday-357371.mp3", play=True)
+audio_b64 = get_audio_base64("happy-birthday-357371.mp3")
+
+# Music control buttons with CSS
+st.markdown("""
+<style>
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 30px;
+}
+button.stButton > button {
+    background-color: #ff69b4;
+    color: white;
+    padding: 0.6em 1.5em;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+button.stButton > button:hover {
+    background-color: #ff1493;
+    transform: scale(1.05);
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Interactive play/stop buttons
+st.markdown('<div class="button-container">', unsafe_allow_html=True)
+col1, col2 = st.columns([1, 1])
+with col1:
+    play = st.button("▶️ Play Me")
+with col2:
+    stop = st.button("⏹️ Thamo")
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Music control logic
+if play and audio_b64:
+    st.markdown(f"""
+        <audio id="audio" autoplay loop>
+            <source src="data:audio/mp3;base64,{audio_b64}" type="audio/mp3">
+        </audio>
+        <script>
+            const audio = document.getElementById("audio");
+            audio.play();
+        </script>
+    """, unsafe_allow_html=True)
+
 elif stop:
-    embed_audio("happy-birthday-357371.mp3", play=False)
+    st.markdown("""
+        <script>
+            const oldAudio = document.getElementById("audio");
+            if (oldAudio) {{
+                oldAudio.pause();
+                oldAudio.remove();
+            }}
+        </script>
+    """, unsafe_allow_html=True)
 
 # Balloons
 st.balloons()
