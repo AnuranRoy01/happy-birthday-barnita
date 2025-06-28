@@ -2,15 +2,37 @@ import streamlit as st
 from PIL import Image
 import base64
 import os
+import time
 
-# Page configuration
+# Page config
 st.set_page_config(page_title="Happy Birthday Barnita 🎂", layout="centered")
 
-# Title section
+# Custom dynamic background
+st.markdown("""
+<style>
+body {
+    background: linear-gradient(-45deg, #fce4ec, #f8bbd0, #f48fb1, #f06292);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Title
 st.markdown("<h1 style='text-align: center; color: #FF69B4;'>🎉 Happy Birthday Barnita! 🎉</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>Many Many Happiest Returns of the Day.. 💖</h3>", unsafe_allow_html=True)
 
-# Load and base64 encode the audio file
+# Party popper animation
+for _ in range(3):
+    st.markdown("<p style='font-size:30px; text-align:center;'>🎊 🎉 🎈 🥳 🎁 🎂</p>", unsafe_allow_html=True)
+    time.sleep(0.5)
+
+# Music encode function
 def get_audio_base64(audio_file):
     if os.path.exists(audio_file):
         with open(audio_file, "rb") as f:
@@ -19,41 +41,45 @@ def get_audio_base64(audio_file):
 
 audio_b64 = get_audio_base64("happy-birthday-357371.mp3")
 
-# Music control buttons with CSS
+# Interactive buttons with fancy styling
 st.markdown("""
 <style>
-.button-container {
+.button-row {
     display: flex;
     justify-content: center;
+    gap: 2rem;
     margin-top: 20px;
-    gap: 30px;
+    margin-bottom: 30px;
 }
-button.stButton > button {
-    background-color: #ff69b4;
+.stButton > button {
+    background-color: #e91e63;
     color: white;
-    padding: 0.6em 1.5em;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0.7em 2em;
     border: none;
-    border-radius: 8px;
-    font-size: 1em;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #e91e63;
     transition: all 0.3s ease;
 }
-button.stButton > button:hover {
-    background-color: #ff1493;
-    transform: scale(1.05);
+.stButton > button:hover {
+    background-color: #c2185b;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #f06292;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Interactive play/stop buttons
-st.markdown('<div class="button-container">', unsafe_allow_html=True)
+# Button interaction row
+st.markdown('<div class="button-row">', unsafe_allow_html=True)
 col1, col2 = st.columns([1, 1])
 with col1:
-    play = st.button("▶️ Play Me")
+    play = st.button("▶️ Play Birthday Song")
 with col2:
-    stop = st.button("⏹️ Thamo")
+    stop = st.button("⏹️ Stop Music")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Music control logic
+# Handle music control
 if play and audio_b64:
     st.markdown(f"""
         <audio id="audio" autoplay loop>
@@ -69,17 +95,19 @@ elif stop:
     st.markdown("""
         <script>
             const oldAudio = document.getElementById("audio");
-            if (oldAudio) {{
+            if (oldAudio) {
                 oldAudio.pause();
                 oldAudio.remove();
-            }}
+            }
         </script>
     """, unsafe_allow_html=True)
 
-# Balloons
-st.balloons()
+# Balloons every 3 seconds (simulated repeat)
+for _ in range(3):
+    st.balloons()
+    time.sleep(3)
 
-# Image display
+# Image gallery
 cols = st.columns(3)
 images = ["photo1.jpg", "photo3.jpg", "photo2.jpg"]
 for i in range(3):
@@ -87,4 +115,4 @@ for i in range(3):
         st.image(Image.open(images[i]), use_container_width=True)
 
 # Footer
-st.markdown("<p style='text-align: center;'>🎂 🎁 🎈</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size:24px;'>🎂 🎁 🎈 With love and joy 💖</p>", unsafe_allow_html=True)
